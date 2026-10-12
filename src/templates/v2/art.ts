@@ -100,67 +100,279 @@ export function light(ctx: Ctx, x: number, y: number, size: number, color = 'rgb
   ctx.drawImage(lightSprite(color), x - size / 2, y - size / 2, size, size);
 }
 
-/** Garba pandal canopy: radiating fabric panels with fairy lights on every seam. */
-export function canopy(ctx: Ctx, w: number, h: number, cx: number, cy: number, seed = 3) {
-  const cols = ['#E8442E', '#F59E1B', '#C2185B', '#FFD23F', '#1E7B4A', '#F2E6D0', '#7B1FA2', '#FF6A13', '#1F4FA8', '#E91E63', '#FFB300', '#B71C1C'];
+/** Garba pandal canopy: satin fabric panels radiating from a lit centre, fairy lights on every seam.
+ *  Tuned to look like the real pandal-ceiling photos used on Pinterest stories. */
+export function canopy(ctx: Ctx, w: number, h: number, cx: number, cy: number, seed = 3, opts: { burst?: number; lights?: number } = {}) {
+  const cols = ['#8E0E14', '#C0161D', '#D9471A', '#E8921A', '#D4A62A', '#3D6B2C', '#1C2C6E', '#5A1870', '#9A1D4F', '#E9CF9A', '#B5541A', '#6E0C2A'];
   const r = rng(seed);
-  const N = 34;
-  const R = Math.hypot(w, h) * 1.2;
+  const R = Math.hypot(w, h) * 1.3;
+  const burst = opts.burst ?? 1;
   ctx.save();
-  ctx.fillStyle = '#120806';
+  ctx.fillStyle = '#0D0504';
   ctx.fillRect(0, 0, w, h);
   const seams: number[] = [];
   let a = -Math.PI;
-  for (let i = 0; i < N; i++) {
-    const span = ((Math.PI * 2) / N) * (0.75 + r() * 0.5);
-    const a1 = i === N - 1 ? Math.PI : a + span;
-    const col = cols[Math.floor(r() * cols.length)];
-    // panel
+  let last = -1;
+  while (a < Math.PI) {
+    const span = (Math.PI * 2 / 64) * (0.5 + r() * 1.3);
+    const a1 = Math.min(Math.PI, a + span);
+    let ci = Math.floor(r() * cols.length);
+    if (ci === last) ci = (ci + 3) % cols.length;
+    last = ci;
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, R, a, a1);
     ctx.closePath();
-    ctx.fillStyle = col;
+    ctx.fillStyle = cols[ci];
     ctx.fill();
-    // fabric fold shading: darker edges, bright center streak
-    const mid = (a + a1) / 2;
-    const g = ctx.createLinearGradient(
-      cx + Math.cos(a) * 600, cy + Math.sin(a) * 600,
-      cx + Math.cos(a1) * 600, cy + Math.sin(a1) * 600,
-    );
-    g.addColorStop(0, 'rgba(0,0,0,0.42)');
-    g.addColorStop(0.45, 'rgba(255,255,255,0.10)');
-    g.addColorStop(0.55, 'rgba(255,255,255,0.16)');
-    g.addColorStop(1, 'rgba(0,0,0,0.42)');
+    // satin: dark folds at both seams, one or two sheen streaks inside
+    const p0 = [cx + Math.cos(a) * 700, cy + Math.sin(a) * 700];
+    const p1 = [cx + Math.cos(a1) * 700, cy + Math.sin(a1) * 700];
+    const g = ctx.createLinearGradient(p0[0], p0[1], p1[0], p1[1]);
+    const sheen = 0.25 + r() * 0.5;
+    g.addColorStop(0, 'rgba(0,0,0,0.55)');
+    g.addColorStop(Math.max(0.05, sheen - 0.22), 'rgba(0,0,0,0.05)');
+    g.addColorStop(sheen, `rgba(255,240,220,${0.22 + r() * 0.18})`);
+    g.addColorStop(Math.min(0.95, sheen + 0.2), 'rgba(0,0,0,0.08)');
+    g.addColorStop(1, 'rgba(0,0,0,0.6)');
     ctx.fillStyle = g;
     ctx.fill();
-    void mid;
     seams.push(a);
     a = a1;
   }
-  // depth: dark at the gathering point, vignette at edges
-  const depth = ctx.createRadialGradient(cx, cy, 0, cx, cy, 520);
-  depth.addColorStop(0, 'rgba(10,4,2,0.95)');
-  depth.addColorStop(1, 'rgba(10,4,2,0)');
-  ctx.fillStyle = depth;
-  ctx.fillRect(0, 0, w, h);
-  const vig = ctx.createRadialGradient(cx, cy, 500, cx, cy, Math.hypot(w, h) * 0.75);
-  vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,0,0,0.55)');
+  // depth falloff toward the edges
+  const vig = ctx.createRadialGradient(cx, cy, 200, cx, cy, Math.hypot(w, h) * 0.85);
+  vig.addColorStop(0, 'rgba(0,0,0,0.0)');
+  vig.addColorStop(0.55, 'rgba(0,0,0,0.15)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.7)');
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, w, h);
-  // fairy lights on seams
+  // fairy lights along seams (small, dense, warm)
   ctx.globalCompositeOperation = 'lighter';
+  const density = opts.lights ?? 1;
   for (const s of seams) {
-    for (let d = 140; d < R; d += 26 + (d / R) * 30) {
-      const j = (r() - 0.5) * 6;
-      const x = cx + Math.cos(s) * d + Math.cos(s + Math.PI / 2) * j;
-      const y = cy + Math.sin(s) * d + Math.sin(s + Math.PI / 2) * j;
-      if (x < -40 || y < -40 || x > w + 40 || y > h + 40) continue;
-      const size = 14 + (d / R) * 40 + r() * 8;
-      light(ctx, x, y, size, r() < 0.8 ? 'rgb(255,214,140)' : 'rgb(255,160,90)');
+    const curve = (r() - 0.5) * 0.04;
+    for (let d = 90; d < R; d += (16 + (d / R) * 26) / density) {
+      const ang = s + curve * (d / 600);
+      const x = cx + Math.cos(ang) * d;
+      const y = cy + Math.sin(ang) * d;
+      if (x < -30 || y < -30 || x > w + 30 || y > h + 30) continue;
+      const size = 9 + (d / R) * 30 + r() * 6;
+      light(ctx, x, y, size, r() < 0.85 ? 'rgb(255,210,130)' : 'rgb(255,150,80)');
     }
   }
+  // the bright light burst at the centre of the pandal
+  if (burst > 0) {
+    light(ctx, cx, cy, 520 * burst, 'rgb(255,190,90)');
+    light(ctx, cx, cy, 220 * burst, 'rgb(255,240,200)');
+  }
+  ctx.restore();
+}
+
+/** Torn white paper band along the top or bottom edge. */
+export function tornBand(ctx: Ctx, w: number, y: number, h: number, edge: 'top' | 'bottom', seed = 2, color = '#F7F5F0') {
+  const r = rng(seed);
+  ctx.save();
+  ctx.beginPath();
+  if (edge === 'bottom') {
+    // band spans y..y+h, ragged edge at y+h
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+    for (let x = w; x >= 0; x -= 8) ctx.lineTo(x, y + h - r() * 22 - (Math.sin(x / 90) + 1) * 6);
+  } else {
+    // band spans y..y+h, ragged edge at y
+    ctx.moveTo(0, y + h);
+    ctx.lineTo(w, y + h);
+    for (let x = w; x >= 0; x -= 8) ctx.lineTo(x, y + r() * 22 + (Math.sin(x / 70) + 1) * 6);
+  }
+  ctx.closePath();
+  ctx.shadowColor = 'rgba(0,0,0,0.45)';
+  ctx.shadowBlur = 18;
+  ctx.shadowOffsetY = edge === 'bottom' ? 6 : -6;
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.restore();
+}
+
+/** Brass push-pin. */
+export function pushpin(ctx: Ctx, x: number, y: number, r = 20) {
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 10;
+  ctx.shadowOffsetX = 5;
+  ctx.shadowOffsetY = 8;
+  const g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r);
+  g.addColorStop(0, '#FFF3C4');
+  g.addColorStop(0.35, '#D9B456');
+  g.addColorStop(1, '#6E5115');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+/** Hand-drawn ribbon bow, line art. */
+export function bow(ctx: Ctx, x: number, y: number, s: number, color = '#F4F1EA') {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(s / 100, s / 100);
+  ctx.strokeStyle = color;
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 3.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  for (const k of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(k * 20, -40, k * 85, -45, k * 80, -5);
+    ctx.bezierCurveTo(k * 78, 20, k * 30, 12, 0, 0);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(k * 22, -14);
+    ctx.quadraticCurveTo(k * 50, -26, k * 66, -12);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(k * 4, 6);
+    ctx.bezierCurveTo(k * 20, 40, k * 30, 70, k * 52, 100);
+    ctx.lineTo(k * 36, 92);
+    ctx.lineTo(k * 30, 106);
+    ctx.bezierCurveTo(k * 14, 70, k * 4, 40, 0, 8);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 11, 13, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+/** Metallic gold five-petal flower sticker. */
+export function goldFlower(ctx: Ctx, x: number, y: number, r: number, rot = 0) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rot);
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 18;
+  ctx.shadowOffsetY = 8;
+  for (let i = 0; i < 5; i++) {
+    ctx.save();
+    ctx.rotate((i / 5) * Math.PI * 2);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-r * 0.55, -r * 0.3, -r * 0.5, -r * 1.05, 0, -r);
+    ctx.bezierCurveTo(r * 0.5, -r * 1.05, r * 0.55, -r * 0.3, 0, 0);
+    const g = ctx.createLinearGradient(-r * 0.5, -r, r * 0.5, 0);
+    g.addColorStop(0, '#FFF4C8');
+    g.addColorStop(0.4, '#E3C26A');
+    g.addColorStop(0.75, '#A7802B');
+    g.addColorStop(1, '#F2DB8C');
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(110,80,20,0.6)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, -r * 0.15);
+    ctx.lineTo(0, -r * 0.8);
+    ctx.strokeStyle = 'rgba(120,85,20,0.45)';
+    ctx.stroke();
+    ctx.restore();
+  }
+  const c = ctx.createRadialGradient(-r * 0.05, -r * 0.05, 1, 0, 0, r * 0.22);
+  c.addColorStop(0, '#FFF8D8');
+  c.addColorStop(1, '#8C6A1E');
+  ctx.fillStyle = c;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+/** Hand-drawn 4-point sparkle, outline only. */
+export function sparkleDoodle(ctx: Ctx, x: number, y: number, s: number, color = '#E9A93A', lw = 4) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lw;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(0, -s);
+  ctx.quadraticCurveTo(s * 0.12, -s * 0.12, s * 0.62, 0);
+  ctx.quadraticCurveTo(s * 0.12, s * 0.12, 0, s);
+  ctx.quadraticCurveTo(-s * 0.12, s * 0.12, -s * 0.62, 0);
+  ctx.quadraticCurveTo(-s * 0.12, -s * 0.12, 0, -s);
+  ctx.stroke();
+  ctx.restore();
+}
+
+/** Compact music-player widget (phone share-sheet style). */
+export function miniPlayer(ctx: Ctx, x: number, y: number, w: number, title: string, artist: string, progress: number, bg = 'rgba(58,26,40,0.92)') {
+  const k = w / 400;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(k, k);
+  ctx.shadowColor = 'rgba(0,0,0,0.35)';
+  ctx.shadowBlur = 24;
+  ctx.shadowOffsetY = 10;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, 400, 200, 18);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.fillStyle = '#FFF';
+  ctx.font = '700 26px "DM Sans Variable", sans-serif';
+  ctx.fillText(title, 26, 46);
+  ctx.fillStyle = 'rgba(255,255,255,0.65)';
+  ctx.font = '500 18px "DM Sans Variable", sans-serif';
+  ctx.fillText(artist, 26, 72);
+  ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(352, 32); ctx.lineTo(368, 48); ctx.moveTo(368, 32); ctx.lineTo(352, 48); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.fillRect(26, 100, 348, 4);
+  ctx.fillStyle = '#FFF';
+  ctx.fillRect(26, 100, 348 * progress, 4);
+  ctx.beginPath(); ctx.arc(26 + 348 * progress, 102, 7, 0, Math.PI * 2); ctx.fill();
+  ctx.font = '500 14px "DM Sans Variable", sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.55)';
+  ctx.fillText('1:07', 26, 126);
+  ctx.textAlign = 'right';
+  ctx.fillText('3:54', 374, 126);
+  // controls
+  const cy = 160;
+  ctx.fillStyle = '#FFF';
+  const tri = (x0: number, dir: number) => { ctx.beginPath(); ctx.moveTo(x0, cy - 11); ctx.lineTo(x0, cy + 11); ctx.lineTo(x0 + dir * 16, cy); ctx.closePath(); ctx.fill(); };
+  ctx.fillRect(124, cy - 11, 4, 22); tri(146, -1);
+  ctx.fillRect(272, cy - 11, 4, 22); tri(254, 1);
+  ctx.beginPath(); ctx.arc(200, cy, 24, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#111';
+  ctx.fillRect(191, cy - 10, 6, 20); ctx.fillRect(203, cy - 10, 6, 20);
+  ctx.restore();
+}
+
+/** Multi-line text block. */
+export function lines(ctx: Ctx, rows: string[], x: number, y: number, lh: number, font: string, fill: string, align: CanvasTextAlign = 'left') {
+  ctx.save();
+  ctx.font = font;
+  ctx.fillStyle = fill;
+  ctx.textAlign = align;
+  rows.forEach((row, i) => ctx.fillText(row, x, y + i * lh));
+  ctx.restore();
+}
+
+/** White photo-strip / film-strip card behind a set of slots (rotated about centre). */
+export function stripCard(ctx: Ctx, cx: number, cy: number, w: number, h: number, rot: number, color = '#FBFAF7') {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate((rot * Math.PI) / 180);
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 40;
+  ctx.shadowOffsetY = 16;
+  ctx.fillStyle = color;
+  ctx.fillRect(-w / 2, -h / 2, w, h);
   ctx.restore();
 }
 

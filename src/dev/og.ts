@@ -19,9 +19,9 @@ import { light } from '../templates/v2/art';
   ctx.fillRect(0, 0, 1200, 630);
   ctx.globalCompositeOperation = 'lighter'; light(ctx, 900, 330, 900, 'rgb(240,140,40)'); ctx.globalCompositeOperation = 'source-over';
   const cards: [string, number, number, number][] = [
-    ['v2-navratri-diaries', 700, 70, -9],
-    ['v2-velvet-lotus', 990, 70, 9],
-    ['v2-garba-canopy', 840, 40, 0],
+    ['c-dolled-up', 700, 70, -9],
+    ['c-dandiya-night', 990, 70, 9],
+    ['c-garba-lookbook', 840, 40, 0],
   ];
   for (const [id, x, y, rot] of cards) {
     const t = byId.get(id)!;

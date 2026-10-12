@@ -12,7 +12,7 @@ import { useToast } from './Toast';
 import { useViewport } from './useViewport';
 import './upload.css';
 
-const HERO_IDS = ['v2-garba-canopy', 'v2-velvet-lotus', 'v2-navratri-diaries', 'v2-cream-diya', 'v2-now-playing', 'v2-flash-mono'];
+const HERO_IDS = ['c-garba-lookbook', 'c-navy-canopy', 'c-dolled-up', 'c-dandiya-night', 'c-lyrics-cream', 'c-pinned-polaroids'];
 
 export function Upload() {
   const { state, dispatch } = useProject();

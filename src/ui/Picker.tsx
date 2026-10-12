@@ -19,8 +19,14 @@ export function Picker() {
   const [lockSheet, setLockSheet] = useState(false);
   const [hint, setHint] = useState(!hintSeen());
   const unlocked = isUnlocked();
-  const idx = state.pickIndex;
-  const t = TEMPLATES[idx];
+  // Frames that fit the user's photo count come first (stable order otherwise).
+  const list = useMemo(() => {
+    const n = state.photos.length;
+    return [...TEMPLATES].sort((a, b) => Number(a.slots.length > n) - Number(b.slots.length > n));
+  }, [state.photos.length]);
+  const idx = Math.min(state.pickIndex, list.length - 1);
+  const t = list[idx];
+  const short = t.slots.length - state.photos.length;
 
   const photos = useMemo(() => new Map(state.photos.map((p) => [p.id, p])), [state.photos]);
   const assignments = useMemo(() => {
@@ -31,7 +37,7 @@ export function Picker() {
 
   const cardW = Math.round(Math.min(w * 0.82, (h - 56 - 190) * (9 / 16)));
   const go = (d: number) => {
-    const n = (idx + d + TEMPLATES.length) % TEMPLATES.length;
+    const n = (idx + d + list.length) % list.length;
     setDir(d);
     dispatch({ type: 'SET_PICK_INDEX', index: n });
     if (hint) { setHint(false); markHintSeen(); }
@@ -59,8 +65,8 @@ export function Picker() {
       <div className="stage" style={{ height: cardW * (16 / 9) + 24 }}>
         <div className="card back" style={{ width: cardW, height: cardW * (16 / 9) }}>
           <TemplateCanvas
-            template={TEMPLATES[(idx + 1) % TEMPLATES.length]}
-            assignments={assignments.get(TEMPLATES[(idx + 1) % TEMPLATES.length].id)!}
+            template={list[(idx + 1) % list.length]}
+            assignments={assignments.get(list[(idx + 1) % list.length].id)!}
             photos={photos}
             width={cardW}
           />
@@ -103,7 +109,8 @@ export function Picker() {
         <button className="nav" onClick={() => go(-1)} aria-label="Previous frame"><ChevronLeft /></button>
         <div className="center">
           <div className="name">{t.name}</div>
-          <div className="caption">{DIRECTION_LABEL[t.direction]} · {idx + 1} of {TEMPLATES.length}</div>
+          <div className="caption">{DIRECTION_LABEL[t.direction]} · {idx + 1} of {list.length}</div>
+          {short > 0 && <div className="caption fit-hint">Best with {t.slots.length} photos · add {short} more or some will repeat</div>}
         </div>
         <button className="nav" onClick={() => go(1)} aria-label="Next frame"><ChevronRight /></button>
       </div>
@@ -124,7 +131,7 @@ export function Picker() {
               <section key={pack}>
                 <h3 className="pack">{pack === 'navratri' ? 'Navratri' : 'Diwali'}</h3>
                 <div className="grid">
-                  {TEMPLATES.map((tp, i) => tp.pack !== pack ? null : (
+                  {list.map((tp, i) => tp.pack !== pack ? null : (
                     <button key={tp.id} className={`gcell ${i === idx ? 'on' : ''}`} onClick={() => { dispatch({ type: 'SET_PICK_INDEX', index: i }); setGrid(false); }}>
                       <TemplateCanvas template={tp} assignments={assignments.get(tp.id)!} photos={photos} width={Math.floor((Math.min(w, 460) - 44) / 2)} />
                       {isLocked(tp) && <span className="lockpill sm"><Lock size={11} /></span>}

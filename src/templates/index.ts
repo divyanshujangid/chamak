@@ -1,5 +1,8 @@
 import type { Template } from '../engine/types';
-import v2 from './v2';
+import v2only from './v2';
+import collages from './v2/collages';
+
+const v2 = [...collages, ...v2only];
 
 /** Display order: festival-of-the-moment first, then the rest. Old v1 set retired (rejected in review). */
 export function allTemplates(now = new Date()): Template[] {
