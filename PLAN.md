@@ -6,6 +6,12 @@
 ## What we are building (one line)
 A free website where anyone uploads 3–8 photos, swipes to pick a festival template, and downloads a 1080x1920 story image in under 60 seconds. No signup, no backend, photos never leave the phone.
 
+## Status (12 Oct 2026, night)
+- **Live:** https://chamak.pages.dev. The full loop works: upload, swipe, edit, download, share.
+- **Templates:** the original 13 specs in `docs/03-templates.md` were built, rejected in review as flat clip-art, and **retired**. The live set is 6 redesigned templates in `src/templates/v2/`, built on the texture and object library in `src/templates/v2/art.ts`. Treat `03-templates.md` slot/colour tables as history; the contract, fonts rules, and quality bar still apply.
+- **Open decision:** where photo-real art comes from: free stock cutouts, AI-generated art, or code-only.
+- **Dev tools:** `/dev.html?set=v2` renders a contact sheet with Smart Pick scores. `/og.html` renders the WhatsApp preview image.
+
 ## Read these docs in order
 | # | Doc | What it answers |
 |---|---|---|
