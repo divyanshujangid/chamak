@@ -3,11 +3,13 @@ import { importOne } from '../engine/photos';
 import { scoreAll } from '../engine/score';
 import { assign } from '../engine/assign';
 import { loadFonts, render } from '../engine/renderer';
-import { TEMPLATES, DIRECTION_LABEL } from '../templates';
+import { TEMPLATES as V1, DIRECTION_LABEL } from '../templates';
+import V2 from '../templates/v2';
 
 const urls = Object.values(import.meta.glob('/dev-photos/*.jpg', { eager: true, query: '?url', import: 'default' })) as string[];
 const q = new URLSearchParams(location.search);
 const only = q.get('only')?.split(',');
+const TEMPLATES = q.get('set') === 'v2' ? V2 : V1;
 const cols = q.get('cols');
 if (cols) document.documentElement.style.setProperty('--cols', cols);
 

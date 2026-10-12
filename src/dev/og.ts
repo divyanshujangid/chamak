@@ -5,7 +5,7 @@ import { render, loadFonts } from '../engine/renderer';
 import { assign } from '../engine/assign';
 import { byId } from '../templates';
 import { demoPhotos } from '../ui/demoPhotos';
-import { glow, sparkle } from '../templates/shared';
+import { light } from '../templates/v2/art';
 
 (async () => {
   const c = document.getElementById('c') as HTMLCanvasElement;
@@ -17,11 +17,11 @@ import { glow, sparkle } from '../templates/shared';
   await document.fonts.load('500 24px "DM Sans Variable"');
   ctx.fillStyle = '#0E0A0C';
   ctx.fillRect(0, 0, 1200, 630);
-  glow(ctx, 900, 330, 520, '240,140,40', 0.35);
+  ctx.globalCompositeOperation = 'lighter'; light(ctx, 900, 330, 900, 'rgb(240,140,40)'); ctx.globalCompositeOperation = 'source-over';
   const cards: [string, number, number, number][] = [
-    ['navratri-garba-night', 700, 70, -9],
-    ['pastel-beige-air', 990, 70, 9],
-    ['diwali-diya-glow', 840, 40, 0],
+    ['v2-navratri-diaries', 700, 70, -9],
+    ['v2-velvet-lotus', 990, 70, 9],
+    ['v2-garba-canopy', 840, 40, 0],
   ];
   for (const [id, x, y, rot] of cards) {
     const t = byId.get(id)!;
@@ -61,6 +61,6 @@ import { glow, sparkle } from '../templates/shared';
   ctx.fillStyle = '#B8ADA6';
   ctx.font = '500 26px "DM Sans Variable"';
   ctx.fillText('Free  ·  No signup  ·  100% private', 70, 540);
-  sparkle(ctx, 560, 120, 30, '#F0B32E');
+
   document.body.dataset.done = '1';
 })();

@@ -9,6 +9,7 @@ export interface Slot {
   rotate?: number;
   shape: SlotShape;
   radius?: number;
+  mono?: boolean;
 }
 
 export type Direction = 'navratri-pop' | 'royal-diwali' | 'minimal-pastel' | 'y2k-chrome';
@@ -24,6 +25,8 @@ export interface Template {
   slots: Slot[];
   drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number): void;
   drawForeground(ctx: CanvasRenderingContext2D, w: number, h: number): void;
+  /** Optional layer drawn just before a given slot (e.g. a card between two photos). */
+  beforeSlot?(ctx: CanvasRenderingContext2D, slotId: string): void;
 }
 
 export interface Photo {

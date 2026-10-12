@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, Download, Lock, Share2 } from 'lucide-react';
 import { exportJpeg, exportName } from '../engine/export';
 import { download, isIOS, shareImage, shareText, whatsappTextLink } from '../engine/share';
-import { byId } from '../templates';
+import { byId, HAS_BONUS } from '../templates';
 import { useProject } from '../state/project';
 import { isUnlocked, recordDownload, recordShare, unlockState } from './store';
 import { useToast } from './Toast';
@@ -101,7 +101,7 @@ export function Done() {
           <span>Add a small “made with chamak” tag</span>
         </label>
 
-        {!unlocked && (
+        {HAS_BONUS && !unlocked && (
           <div className="unlock">
             <Lock size={16} />
             <span>4 bonus frames · {Math.min(u.shares, 1)}/1 share or {Math.min(u.downloads, 3)}/3 downloads</span>

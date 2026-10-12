@@ -23,7 +23,10 @@ export function render(
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
   template.drawBackground(ctx, 1080, 1920);
-  for (const slot of template.slots) drawSlot(ctx, slot, assignments, photos, !!opts.preview);
+  for (const slot of template.slots) {
+    template.beforeSlot?.(ctx, slot.id);
+    drawSlot(ctx, slot, assignments, photos, !!opts.preview);
+  }
   template.drawForeground(ctx, 1080, 1920);
   if (opts.badge) drawBadge(ctx);
   if (opts.selectedSlot) {
@@ -57,6 +60,13 @@ function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, a: Assignments, pho
   ctx.translate(slot.x + slot.w / 2 + t.dx, slot.y + slot.h / 2 + t.dy);
   if (t.rotate) ctx.rotate((t.rotate * Math.PI) / 180);
   ctx.drawImage(p.bitmap, (-p.w * s) / 2, (-p.h * s) / 2, p.w * s, p.h * s);
+  if (slot.mono) {
+    // clip survives a transform reset, so this greys exactly the slot
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = 'saturation';
+    ctx.fillStyle = '#808080';
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  }
   ctx.restore();
 }
 
