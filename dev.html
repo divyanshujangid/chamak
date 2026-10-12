@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chamak dev sheet</title>
+<style>
+body{margin:0;background:#0E0A0C;color:#F7F1EA;font:14px 'DM Sans Variable',system-ui,sans-serif;padding:24px}
+h1{font-size:22px;margin:0 0 4px} p{color:#B8ADA6;margin:0 0 20px}
+#grid{display:grid;grid-template-columns:repeat(var(--cols,5),1fr);gap:20px}
+figure{margin:0} canvas{width:100%;border-radius:10px;display:block;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+figcaption{margin-top:8px;font-size:13px;color:#B8ADA6} figcaption b{color:#F7F1EA}
+#scores{display:flex;gap:10px;margin:0 0 24px;flex-wrap:wrap} #scores div{width:90px;font-size:11px;text-align:center} #scores img{width:90px;height:120px;object-fit:cover;border-radius:6px;display:block}
+</style></head>
+<body><h1>Chamak · template contact sheet</h1><p id="meta">rendering…</p><div id="scores"></div><div id="grid"></div>
+<script type="module" src="/src/dev/sheet.ts"></script></body></html>
