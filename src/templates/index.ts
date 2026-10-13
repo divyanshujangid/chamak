@@ -1,8 +1,10 @@
 import type { Template } from '../engine/types';
 import v2only from './v2';
 import collages from './v2/collages';
+import artful from './v2/artful';
+import scrapbook from './v2/scrapbook';
 
-const v2 = [...collages, ...v2only];
+const v2 = [...scrapbook, ...artful, ...collages, ...v2only];
 
 /** Display order: festival-of-the-moment first, then the rest. Old v1 set retired (rejected in review). */
 export function allTemplates(now = new Date()): Template[] {

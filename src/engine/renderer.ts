@@ -1,3 +1,4 @@
+import { loadArt } from './assets';
 import { applySlotRotation, coverScale, slotPath } from './fit';
 import type { Assignments, Photo, Slot, Template } from './types';
 import { DESIGN_W } from './types';
@@ -97,7 +98,7 @@ function drawBadge(ctx: CanvasRenderingContext2D) {
 
 export async function loadFonts(t: Template) {
   try {
-    await Promise.all(t.fonts.map((f) => document.fonts.load(f, 'Aaशुभ')));
+    await Promise.all([...t.fonts.map((f) => document.fonts.load(f, 'Aaशुभ')), loadArt(t.art ?? [])]);
   } catch {
     /* render with fallback fonts */
   }

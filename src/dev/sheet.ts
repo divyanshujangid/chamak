@@ -6,11 +6,13 @@ import { loadFonts, render } from '../engine/renderer';
 import { TEMPLATES as V1, DIRECTION_LABEL } from '../templates';
 import V2 from '../templates/v2';
 import C from '../templates/v2/collages';
+import A from '../templates/v2/artful';
+import S from '../templates/v2/scrapbook';
 
 const urls = Object.values(import.meta.glob('/dev-photos/*.jpg', { eager: true, query: '?url', import: 'default' })) as string[];
 const q = new URLSearchParams(location.search);
 const only = q.get('only')?.split(',');
-const TEMPLATES = q.get('set') === 'v2' ? V2 : q.get('set') === 'c' ? C : V1;
+const TEMPLATES = q.get('set') === 'v2' ? V2 : q.get('set') === 'c' ? C : q.get('set') === 'a' ? A : q.get('set') === 's' ? S : V1;
 const cols = q.get('cols');
 if (cols) document.documentElement.style.setProperty('--cols', cols);
 

@@ -22,6 +22,8 @@ export interface Template {
   direction: Direction;
   locked?: boolean;
   fonts: string[];
+  /** Raster art names under public/art (loaded before first render). */
+  art?: string[];
   slots: Slot[];
   drawBackground(ctx: CanvasRenderingContext2D, w: number, h: number): void;
   drawForeground(ctx: CanvasRenderingContext2D, w: number, h: number): void;
