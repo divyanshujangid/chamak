@@ -1,19 +1,21 @@
-// Sample photos (Lorem Picsum / Unsplash licence) for the landing gallery and demo mode.
-// 540px WebP in public/samples, fetched only when the landing page needs them.
+// Sample Navratri / garba photos for the landing gallery and demo mode.
+// All from Pexels (free for commercial use, no attribution required: pexels.com/license);
+// photographer and source page for each file are in public/samples/CREDITS.md.
+// 1080px-long-edge WebP in public/samples, fetched only when the landing page needs them.
 import { importOne } from '../engine/photos';
 import type { Photo } from '../engine/types';
 
 /** Face (or subject) centre per sample, so previews look face-centred without loading any model. */
 const SAMPLES: { file: string; focus: { x: number; y: number } }[] = [
-  { file: 's1', focus: { x: 0.56, y: 0.4 } },
-  { file: 's2', focus: { x: 0.56, y: 0.34 } },
-  { file: 's3', focus: { x: 0.45, y: 0.3 } },
-  { file: 's4', focus: { x: 0.5, y: 0.38 } },
-  { file: 's5', focus: { x: 0.55, y: 0.3 } },
-  { file: 's6', focus: { x: 0.45, y: 0.42 } },
-  { file: 's7', focus: { x: 0.44, y: 0.36 } },
-  { file: 's8', focus: { x: 0.55, y: 0.4 } },
-  { file: 's9', focus: { x: 0.5, y: 0.55 } },
+  { file: 's1', focus: { x: 0.53, y: 0.26 } }, // girl in mirror-work chaniya choli
+  { file: 's2', focus: { x: 0.51, y: 0.31 } }, // woman in blue chaniya choli by carved pillar
+  { file: 's3', focus: { x: 0.56, y: 0.39 } }, // girl with dandiya, mirror-work choli
+  { file: 's4', focus: { x: 0.5, y: 0.18 } }, // man in kurta, festive string lights
+  { file: 's5', focus: { x: 0.44, y: 0.25 } }, // friends dancing (three faces, centred on the middle one)
+  { file: 's6', focus: { x: 0.5, y: 0.24 } }, // garba twirl, dandiya raised overhead
+  { file: 's7', focus: { x: 0.44, y: 0.23 } }, // man in black kurta
+  { file: 's8', focus: { x: 0.5, y: 0.5 } }, // dandiya sticks and bangles in a circle (no face)
+  { file: 's9', focus: { x: 0.5, y: 0.49 } }, // Durga idol with marigolds (no person)
 ];
 
 const url = (f: string) => `${import.meta.env.BASE_URL}samples/${f}.webp`;
