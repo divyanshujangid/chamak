@@ -22,6 +22,7 @@
   font-family: var(--font-serif); font-style: italic; font-weight: 400;
   color: var(--rani); letter-spacing: -0.02em; font-size: 1.12em;
 }
+.hero-problem { margin: 12px 0 6px; color: var(--text); font-size: 17px; line-height: 1.35; font-weight: 600; max-width: 30ch; text-wrap: balance; }
 .hero-sub { margin: 0; color: var(--text-dim); font-size: 15px; line-height: 1.4; max-width: 30ch; }
 .hero-sub b { color: var(--text); font-weight: 600; }
 

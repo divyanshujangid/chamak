@@ -118,8 +118,9 @@ export function Upload() {
         <>
           <section className="hero">
             <div className="tag hero-tag"><i style={{ background: tag.dot }} />{tag.text}</div>
+            <p className="hero-problem">Garba khel ke thak gaye? Mast photos hain, par edit karne ki energy zero 😮‍💨</p>
             <h1 className="hero-h">Photo daalo,<br />story <em>ready.</em></h1>
-            <p className="hero-sub">Festive story frames in 30 sec. No signup. <b>Pics never leave your phone.</b></p>
+            <p className="hero-sub">Ghar jaate jaate, cab mein hi. <b>30 sec mein Insta-ready story.</b> No signup, pics stay on your phone.</p>
             <div className="fan" style={{ height: Math.round(heroW * 1.78) + 24 }} aria-hidden>
               {heroes.length >= 3 && [-1, 0, 1].map((off) => {
                 const i = (heroIdx + off + heroes.length) % heroes.length;
