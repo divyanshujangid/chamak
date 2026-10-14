@@ -1,6 +1,7 @@
 export const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+// Switch to https://storywala.divyanshujangid.in once its DNS (CNAME at Hostinger) is live.
 export const SITE_URL = 'https://chamak.pages.dev';
 
 export function shareText(now = new Date()) {

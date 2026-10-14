@@ -130,7 +130,7 @@ export function Upload() {
                   </div>
                 );
               })}
-              <span className="fan-sticker deva">चमक</span>
+              <span className="fan-sticker deva">स्टोरीवाला</span>
               <span className="fan-sticker smart"><Sparkle size={11} /> faces centred</span>
             </div>
           </section>

@@ -2,28 +2,42 @@
 <html lang="en-IN">
   <head>
     <meta charset="utf-8" />
+    <script>
+      // Old address -> new home. Off until storywala.divyanshujangid.in DNS is live; flip to true then.
+      // Add ?stay=1 to keep testing on the old host.
+      (function () {
+        var REDIRECT_OLD_HOST = false;
+        if (!REDIRECT_OLD_HOST) return;
+        if (location.hostname !== 'chamak.pages.dev') return;
+        if (/(?:^|[?&])stay=1(?:&|$)/.test(location.search)) return;
+        location.replace('https://storywala.divyanshujangid.in' + location.pathname + location.search + location.hash);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0B0912" />
     <meta name="color-scheme" content="dark" />
-    <title>Chamak ✦ Photo daalo, story ready</title>
+    <title>Storywala ✦ Photo daalo, story ready</title>
     <meta name="description" content="Garba ke baad thak gaye? Drop your pics and get an Insta-ready Navratri story in 30 seconds, right in the cab home. Free, no signup, photos never leave your phone." />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Chamak" />
-    <meta property="og:title" content="Chamak ✦ Photo daalo, story ready" />
+    <meta property="og:site_name" content="Storywala" />
+    <meta property="og:title" content="Storywala ✦ Photo daalo, story ready" />
     <meta property="og:description" content="Garba ke baad thak gaye? Insta-ready story in 30 sec, right in the cab home. Free, no signup." />
-    <meta property="og:image" content="https://chamak.pages.dev/og.jpg?v=5" />
+    <meta property="og:image" content="https://chamak.pages.dev/og.jpg?v=6" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://chamak.pages.dev/" />
+    <meta property="og:url" content="https://storywala.divyanshujangid.in/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="twitter:title" content="Storywala ✦ Photo daalo, story ready" />
+    <meta name="twitter:description" content="Garba ke baad thak gaye? Insta-ready story in 30 sec, right in the cab home. Free, no signup." />
+    <meta name="twitter:image" content="https://chamak.pages.dev/og.jpg?v=6" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Chamak" />
+    <meta name="apple-mobile-web-app-title" content="Storywala" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="application-name" content="Chamak" />
+    <meta name="application-name" content="Storywala" />
   </head>
   <body>
     <div id="root"></div>

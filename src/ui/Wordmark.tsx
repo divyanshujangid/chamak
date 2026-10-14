@@ -1,4 +1,4 @@
-/** Four-point sparkle: the Chamak mark. */
+/** Four-point sparkle: the Storywala accent. */
 export function Sparkle({ className, size }: { className?: string; size?: number }) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden fill="currentColor">
@@ -8,8 +8,8 @@ export function Sparkle({ className, size }: { className?: string; size?: number
 }
 
 export function Wordmark({ href }: { href?: string }) {
-  const inner = <>chamak<Sparkle /></>;
+  const inner = <>storywala<Sparkle /></>;
   return href
-    ? <a className="wordmark left" href={href} aria-label="Chamak home">{inner}</a>
-    : <span className="wordmark left" role="img" aria-label="Chamak">{inner}</span>;
+    ? <a className="wordmark left" href={href} aria-label="Storywala home">{inner}</a>
+    : <span className="wordmark left" role="img" aria-label="Storywala">{inner}</span>;
 }

@@ -1,4 +1,4 @@
-# Chamak — Master Plan
+# Storywala — Master Plan
 
 **Written:** 12 Oct 2026 · **Brief:** `~/Downloads/BRIEF.md` · **Budget:** ₹0 · **Owner:** Divyanshu
 **Progress channel:** Slack #claude (C0BSPJAPLTG)
@@ -7,7 +7,7 @@
 A free website where anyone uploads 3–8 photos, swipes to pick a festival template, and downloads a 1080x1920 story image in under 60 seconds. No signup, no backend, photos never leave the phone.
 
 ## Status (12 Oct 2026, night)
-- **Live:** https://chamak.pages.dev. The full loop works: upload, swipe, edit, download, share.
+- **Live:** https://chamak.pages.dev. New home https://storywala.divyanshujangid.in once its DNS is connected; chamak.pages.dev then stays as the fallback (same Cloudflare project). The full loop works: upload, swipe, edit, download, share.
 - **Templates:** the original 13 specs in `docs/03-templates.md` were built, rejected in review as flat clip-art, and **retired**. The live set is 6 redesigned templates in `src/templates/v2/`, built on the texture and object library in `src/templates/v2/art.ts`. Treat `03-templates.md` slot/colour tables as history; the contract, fonts rules, and quality bar still apply.
 - **Open decision:** where photo-real art comes from: free stock cutouts, AI-generated art, or code-only.
 - **Dev tools:** `/dev.html?set=v2` renders a contact sheet with Smart Pick scores. `/og.html` renders the WhatsApp preview image.
@@ -37,7 +37,7 @@ Two launches on one engine: **Navratri pack by Wed 14 Oct**, **Diwali pack by Fr
 ## Locked decisions
 | Area | Decision |
 |---|---|
-| Name | **Chamak** (चमक, "sparkle"). URL `chamak.pages.dev` (free) until traffic justifies a domain. |
+| Name | **Storywala** (स्टोरीवाला, "the one who makes your story"). Renamed from Chamak on 15 Oct 2026. Home `storywala.divyanshujangid.in`; `chamak.pages.dev` stays as fallback (redirect script in `index.html`, off until DNS is live). |
 | Stack | Vite + React 18 + TypeScript. Hand-written CSS with tokens. No Tailwind, no component library. |
 | Rendering | One canvas renderer for preview and export. Design space is 1080x1920. |
 | Templates | One TS module each. Metadata + slots + `drawBackground` + `drawForeground`. All art drawn as code. |

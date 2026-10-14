@@ -1,4 +1,4 @@
-/* Chamak brand tokens. See docs/07-brand.md. Dark only. */
+/* Storywala brand tokens. See docs/07-brand.md. Dark only. */
 :root {
   /* Raat (night) neutrals */
   --bg: #0B0912;
@@ -13,6 +13,8 @@
 
   /* Brand colours */
   --rani: #FF3D8B;     /* rani pink: the brand */
+  --gulabi: #F4A9BE;   /* soft lotus pink: wordmark sparkle, icon wash */
+  --cream: #FFF8EF;    /* story-card cream from the icon */
   --nimbu: #DBFF4A;    /* nimbu lime: primary CTA only */
   --genda: #FFB22E;    /* marigold: stickers, badges */
   --neel: #8C7BFF;     /* Smart Pick / magic moments */

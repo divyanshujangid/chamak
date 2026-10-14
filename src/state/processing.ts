@@ -82,7 +82,7 @@ export function usePhotoProcessing() {
           }
         } catch (e) {
           // Keep the fallback rendering (centre crop / photo sticker).
-          console.warn(`chamak: ${kind} skipped`, e);
+          console.warn(`storywala: ${kind} skipped`, e);
         }
         await new Promise((r) => setTimeout(r, 0));
       }

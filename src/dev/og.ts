@@ -10,6 +10,21 @@ import { galleryPhotos } from '../ui/samples';
 const INK = '#0B0912';
 const RANI = '#FF3D8B';
 const LIME = '#DBFF4A';
+const GULABI = '#F4A9BE';
+
+function sparkle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, fill: string) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.beginPath();
+  ctx.moveTo(0, -r);
+  ctx.quadraticCurveTo(r * 0.12, -r * 0.12, r, 0);
+  ctx.quadraticCurveTo(r * 0.12, r * 0.12, 0, r);
+  ctx.quadraticCurveTo(-r * 0.12, r * 0.12, -r, 0);
+  ctx.quadraticCurveTo(-r * 0.12, -r * 0.12, 0, -r);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.restore();
+}
 
 (async () => {
   const c = document.getElementById('c') as HTMLCanvasElement;
@@ -60,12 +75,21 @@ const LIME = '#DBFF4A';
     ctx.restore();
   }
 
+  // Brand row: app icon + "storywala" wordmark (Instrument Serif italic) + soft sparkle.
+  const icon = new Image();
+  icon.src = '/icons/icon-192.png';
+  await icon.decode().catch(() => {});
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(64, 50, 60, 60, 14);
+  ctx.clip();
+  ctx.drawImage(icon, 64, 50, 60, 60);
+  ctx.restore();
   ctx.fillStyle = '#FFFFFF';
-  ctx.font = '800 46px "Bricolage Grotesque Variable"';
-  ctx.fillText('chamak', 64, 96);
-  ctx.fillStyle = RANI;
-  ctx.font = '800 34px "Bricolage Grotesque Variable"';
-  ctx.fillText('✦', 222, 70);
+  ctx.font = 'italic 400 58px "Instrument Serif"';
+  ctx.fillText('storywala', 140, 98);
+  const ww = ctx.measureText('storywala').width;
+  sparkle(ctx, 140 + ww + 14, 62, 11, GULABI);
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '800 84px "Bricolage Grotesque Variable"';

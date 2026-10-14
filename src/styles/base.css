@@ -84,11 +84,11 @@ a { color: var(--accent); }
 }
 .wordmark {
   display: inline-flex; align-items: flex-start;
-  font-family: var(--font-display); font-weight: 800; font-size: 27px;
-  letter-spacing: -0.055em; line-height: 1; color: var(--text);
+  font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 31px;
+  letter-spacing: -0.01em; line-height: 1; color: var(--text);
   text-decoration: none; padding-left: 8px;
 }
-.wordmark svg { width: 13px; height: 13px; margin: -3px 0 0 1px; color: var(--rani); flex: none; }
+.wordmark svg { width: 11px; height: 11px; margin: -2px 0 0 2px; color: var(--gulabi); flex: none; }
 
 .caption { font-size: 13px; color: var(--text-dim); }
 .bottom-bar {

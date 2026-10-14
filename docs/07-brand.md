@@ -1,10 +1,10 @@
-# 07 — Brand: Chamak
+# 07 — Brand: Storywala
 
-**Written:** 14 Oct 2026 (Navratri day 4). Applies to the app UI, icons, OG image and social posts. Templates keep their own art direction (see `03-templates.md`); the brand is the frame around them, not inside them.
+**Written:** 14 Oct 2026 (Navratri day 4). **Renamed** from Chamak to Storywala on 15 Oct 2026. Applies to the app UI, icons, OG image and social posts. Templates keep their own art direction (see `03-templates.md`); the brand is the frame around them, not inside them.
 
 ## Positioning
 **The 30-second festive story maker for people who'd rather be dancing than editing.**
-You drop your garba pics, Chamak picks your best shots, centres the faces and hands back a story that looks like you spent an hour on it. No signup, no upload, no editing skills.
+You drop your garba pics, Storywala picks your best shots, centres the faces and hands back a story that looks like you spent an hour on it. No signup, no upload, no editing skills.
 
 Reference feel: the confidence of Instagram Edits, the playful sticker energy of Lemon8, the "no-filter, just post" honesty of BeReal, plus the colour of a garba ground at 11 pm: rani pink dupattas, marigold, neon from the food stalls.
 
@@ -13,14 +13,22 @@ What we are not:
 - Not the warm-cream-and-terracotta "artisanal" look.
 - Not a greeting-card app (no clip-art diyas in the UI; the art lives in the templates).
 
-## Name, tagline, lines
+## Name
+**Storywala** (स्टोरीवाला). Home: **https://storywala.divyanshujangid.in**. The old address `chamak.pages.dev` keeps working as a fallback (same Cloudflare Pages project, still called `chamak`).
+
+- **Why the name:** a *story-wala* is the person (or app) who makes your story for you, like the chaiwala makes your chai. After garba you're too tired to edit; the storywala does it in 30 seconds in the cab home. It says what we do and who does the work, in the way the group chat already talks.
+- **Spelling:** `storywala` all lowercase in the wordmark and UI chrome; **Storywala** with a capital S in sentences, titles, the manifest and meta tags. Never "StoryWala", "Story Wala" or "Storywalla". Devanagari: **स्टोरीवाला**.
+- The old name *Chamak* (चमक, "sparkle") lives on in the ✦ sparkle accent.
+
+## Tagline and lines
 | Use | Line |
 |---|---|
 | Tagline (primary) | **Photo daalo, story ready.** |
 | Hero support | Navratri + Diwali story frames in 30 sec. No signup. Pics never leave your phone. |
-| Short promise | Zero editing. Zero signup. Full chamak. |
+| Short promise | Zero editing. Zero signup. Story ready. |
 | Privacy line | Pics stay on your phone. Pakka. |
-| WhatsApp share | Made my Navratri story in 30 sec on chamak.pages.dev ✦ no signup, photos stay on your phone |
+| WhatsApp share | Made this Navratri frame in 30 seconds 🪔 No signup, photos never uploaded. Try it: https://storywala.divyanshujangid.in |
+| Export badge | made with storywala ✦ |
 
 ## Voice rules
 1. **Talk like the group chat, not like a bank.** Short, lowercase-friendly, Hinglish where it comes naturally. One Hindi word per line, max.
@@ -38,14 +46,23 @@ What we are not:
 | Picker | Swipe for vibes | Browse templates |
 | Done | Story ready ✦ Ab post karo. | Your export is complete! |
 | Error | Couldn't render on this phone. Try fewer photos. | Oops! Something went wrong!! |
-| Install | Keep Chamak on your home screen. Diwali is coming. | Install our Progressive Web App |
+| Install | Keep Storywala on your home screen. Diwali is coming. | Install our Progressive Web App |
 | Locked frame | 1 share unlocks 4 bonus frames | Premium content |
 
 ## Wordmark
-- `chamak` in **Bricolage Grotesque 800**, all lowercase, tracking −0.05em, with a **four-point sparkle (✦) in rani pink** sitting on the shoulder of the `k`, like a glint on a mirror-work dupatta.
-- Optional Devanagari tag **चमक** in Yatra One, rotated −4°, in a marigold sticker pill. Use it on the landing hero and social posts only, never in the top bar.
-- Minimum size: 20px cap height in the top bar. Never outline it, never put it on a gradient.
-- App icon / favicon: the sparkle alone, rani pink on raat ink, with a small nimbu-lime glint.
+- `storywala` in **Instrument Serif Italic 400**, all lowercase, tracking −0.01em, with a small **four-point sparkle (✦) in gulabi** (`--gulabi`, #F4A9BE) on the shoulder of the final `a`. Soft and handwritten-feeling, like a caption on a Pinterest story, not a tech logo.
+- On the dark UI the letters are Doodh (`--text`); on light/paper backgrounds use ink `#2B2226`. The sparkle stays gulabi on both.
+- Optional Devanagari tag **स्टोरीवाला** in Yatra One, rotated, in a marigold sticker pill. Landing hero and social posts only, never in the top bar.
+- Minimum size: 26px font size in the top bar (the serif is light; smaller gets wispy). Never outline it, never put it on a busy photo.
+
+## App icon
+Soft and aesthetic, made from the same handmade-paper language as the templates. Source: `scratchpad/brand/sw-icon.html`, rendered by `scratchpad/shot/sw-icons.mjs` into `public/icons/`.
+
+- **Layers, back to front:** handmade paper (`pd-paper.webp`) · pastel wash, mint `#D9EEE3` → peach `#F6E6DE` → blush `#F7CFDA` (multiply) · soft cream glow · a **cream story card** (`#FFF9F1`, rounded 9:16, tilted −7°) · the painted **pink lotus** (`pp-lotus-big.webp`) sitting over the card's lower half · one **small sparkle** top-right in `#EE9AB1` with a cream edge.
+- **Files:** `icon-192.png`, `icon-512.png` (full bleed, the OS rounds the corners), `maskable-512.png` (artwork shrunk to 78% so it survives the circle mask), `apple-touch-icon.png` (180), `favicon.svg`.
+- **Favicon:** a simplified vector, five flat-gradient pink petals on a cream card over the pastel wash, plus the sparkle. No texture: it can't hold at 16px.
+- **48px test:** at home-screen size it must still read as "pink flower on a white card" next to Instagram and WhatsApp. If a change muddies that, the lotus wins: keep it big and saturated, keep the card edges visible above and below it.
+- Never: bold neon, the dark raat background, clip-art, text inside the icon.
 
 ## Palette (`src/styles/tokens.css`)
 Dark UI, so template colours stay the loudest thing on screen.
@@ -57,7 +74,9 @@ Dark UI, so template colours stay the loudest thing on screen.
 | `--surface-2` | `#231D30` | Raat 3 | Chips, inputs |
 | `--text` | `#FBF7FF` | Doodh | Body text |
 | `--text-dim` | `#B3ABC4` | Dhuaan | Secondary text (7.9:1 on bg) |
-| `--rani` / `--accent` | `#FF3D8B` | Rani pink | Brand accent, sparkle, focus, selection |
+| `--rani` / `--accent` | `#FF3D8B` | Rani pink | Brand accent, focus, selection |
+| `--gulabi` | `#F4A9BE` | Gulabi | Soft lotus pink: wordmark sparkle, icon |
+| `--cream` | `#FFF8EF` | Malai | Story-card cream from the icon |
 | `--nimbu` / `--cta` | `#DBFF4A` | Nimbu lime | Primary CTA only (ink text, 16:1) |
 | `--genda` | `#FFB22E` | Genda marigold | Stickers, badges, highlights |
 | `--neel` | `#8C7BFF` | Neel | Smart Pick / "magic" moments only |
@@ -68,7 +87,8 @@ Rules: one nimbu element per screen (the main action). Rani pink is the brand; m
 ## Type
 | Role | Font | Setting |
 |---|---|---|
-| Display / wordmark | Bricolage Grotesque Variable | 800, −0.04em, line-height 0.92 |
+| Wordmark | Instrument Serif Italic | 400, lowercase, −0.01em |
+| Display | Bricolage Grotesque Variable | 800, −0.04em, line-height 0.92 |
 | Editorial accent | Instrument Serif Italic | One word per headline, in rani pink ("story *ready.*") |
 | Labels / tags | Space Mono | 700, uppercase, +0.08em, 11–12px ("DAY 04 · ROYAL BLUE") |
 | UI / body | DM Sans Variable | 400–700, 14–17px |
