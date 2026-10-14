@@ -4,14 +4,30 @@ export function coverScale(slot: Slot, p: { w: number; h: number }) {
   return Math.max(slot.w / p.w, slot.h / p.h);
 }
 
-/** Clamp pan so the photo never exposes the background (skipped when rotated). */
-export function clampTransform(slot: Slot, p: Photo, t: PhotoTransform): PhotoTransform {
-  const scale = Math.min(4, Math.max(1, t.scale));
-  if (t.rotate !== 0) return { ...t, scale };
+const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+
+/**
+ * Where the photo sits in a slot. `s` is the drawn scale; (ox, oy) is the offset of the
+ * photo centre from the slot centre before the user's dx/dy. With a focus point (the
+ * faces) the cover-fitted photo is centred on it, clamped so no background shows.
+ */
+export function placement(slot: Slot, p: Pick<Photo, 'w' | 'h' | 'focus'>, scale: number) {
   const s = coverScale(slot, p) * scale;
   const mx = Math.max(0, (p.w * s - slot.w) / 2);
   const my = Math.max(0, (p.h * s - slot.h) / 2);
-  return { ...t, scale, dx: Math.max(-mx, Math.min(mx, t.dx)), dy: Math.max(-my, Math.min(my, t.dy)) };
+  const f = p.focus;
+  const ox = f ? clamp((0.5 - f.x) * p.w * s, mx) : 0;
+  const oy = f ? clamp((0.5 - f.y) * p.h * s, my) : 0;
+  return { s, ox, oy, mx, my };
+}
+
+/** Clamp pan so the photo never exposes the background (skipped when rotated).
+ *  dx/dy are offsets on top of the focus placement. */
+export function clampTransform(slot: Slot, p: Photo, t: PhotoTransform): PhotoTransform {
+  const scale = Math.min(4, Math.max(1, t.scale));
+  if (t.rotate !== 0) return { ...t, scale };
+  const { ox, oy, mx, my } = placement(slot, p, scale);
+  return { ...t, scale, dx: clamp(ox + t.dx, mx) - ox, dy: clamp(oy + t.dy, my) - oy };
 }
 
 export function slotPath(ctx: CanvasRenderingContext2D | Path2D, slot: Slot) {

@@ -10,6 +10,8 @@ export interface Slot {
   shape: SlotShape;
   radius?: number;
   mono?: boolean;
+  /** Draw only the person (background removed) with a white sticker outline. Falls back to a stickered photo until the mask is ready. */
+  cutout?: boolean;
 }
 
 export type Direction = 'navratri-pop' | 'royal-diwali' | 'minimal-pastel' | 'y2k-chrome';
@@ -38,6 +40,13 @@ export interface Photo {
   h: number;
   score: number;
   thumbUrl: string;
+  /** Normalised (0..1) point to centre on when cropping into a slot, e.g. the main face. */
+  focus?: { x: number; y: number };
+  /** Face prominence 0..1 (size of the main face, less if off-centre). 0 = no face found;
+   *  undefined = not analysed yet. Drives hero and cut-out slot choice. */
+  faceScore?: number;
+  /** Same size as bitmap; person only, transparent elsewhere. Filled lazily. */
+  cutout?: ImageBitmap;
 }
 
 export interface PhotoTransform {

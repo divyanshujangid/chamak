@@ -2,7 +2,7 @@
 .editor .topbar { width: 100%; }
 .btn-done {
   height: 36px; padding: 0 16px; border-radius: 999px;
-  background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 15px;
+  background: var(--cta); color: var(--cta-ink); font-weight: 800; font-size: 15px;
 }
 .canvas-wrap {
   position: relative; margin-top: 4px;

@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, Download, Lock, Share2 } from 'lucide-react';
+import { Camera, ChevronLeft, Download, Lock, Share2, X } from 'lucide-react';
+import { assign } from '../engine/assign';
 import { exportJpeg, exportName } from '../engine/export';
 import { download, isIOS, shareImage, shareText, whatsappTextLink } from '../engine/share';
 import { byId, HAS_BONUS } from '../templates';
 import { useProject } from '../state/project';
 import { isUnlocked, recordDownload, recordShare, unlockState } from './store';
 import { useToast } from './Toast';
+import { InstallButton } from './InstallSheet';
+import { markNudgeSeen, nudgeSeen, useInstall } from './install';
+import { usePhotoImport } from './usePhotoImport';
+import { Sparkle } from './Wordmark';
 import './done.css';
 
 export function Done() {
@@ -16,6 +21,17 @@ export function Done() {
   const [url, setUrl] = useState<string | null>(null);
   const [error, setError] = useState(false);
   const [, bump] = useState(0);
+  const [won, setWon] = useState(false);
+  const [nudgeOff, setNudgeOff] = useState(nudgeSeen);
+  const install = useInstall();
+  // Demo mode: swap the samples for the user's own pics and go straight back to edit this frame.
+  const mine = usePhotoImport({
+    replace: true,
+    onDone: (all) => {
+      dispatch({ type: 'SET_TEMPLATE', templateId: t.id, assignments: assign(t, all) });
+      dispatch({ type: 'SET_STEP', step: 'edit' });
+    },
+  });
   const photos = useMemo(() => new Map(state.photos.map((p) => [p.id, p])), [state.photos]);
   const name = exportName(t);
 
@@ -37,6 +53,7 @@ export function Done() {
 
   const afterCount = (wasUnlocked: boolean) => {
     if (!wasUnlocked && isUnlocked()) toast('4 bonus frames unlocked 🎉');
+    setWon(true);
     bump((n) => n + 1);
   };
 
@@ -46,7 +63,8 @@ export function Done() {
     if (isIOS) {
       const r = await shareImage(blob, name);
       if (r === 'shared') { recordDownload(); afterCount(was); }
-      else if (r === 'unsupported') { download(blob, name); recordDownload(); afterCount(was); }
+      else if (r === 'blocked') toast('Tap Save again');
+      else if (r === 'unsupported' || r === 'failed') { download(blob, name); recordDownload(); toast('Saved to your downloads'); afterCount(was); }
     } else {
       download(blob, name);
       recordDownload();
@@ -60,6 +78,8 @@ export function Done() {
     const was = isUnlocked();
     const r = await shareImage(blob, name, shareText());
     if (r === 'shared') { recordShare(); afterCount(was); }
+    else if (r === 'blocked') toast('Tap Share again');
+    else if (r === 'failed') { download(blob, name); toast('Sharing failed, so we saved it to your downloads'); }
     else if (r === 'unsupported') window.open(whatsappTextLink(shareText()), '_blank');
   }
 
@@ -70,7 +90,7 @@ export function Done() {
     <div className="done">
       <header className="topbar">
         <button className="left iconbtn" onClick={() => dispatch({ type: 'SET_STEP', step: 'edit' })}><ChevronLeft size={20} /> Edit</button>
-        <h1>Ready ✨</h1>
+        <h1>Story ready <span className="h1-spark"><Sparkle size={14} /></span></h1>
         <span />
       </header>
 
@@ -88,6 +108,11 @@ export function Done() {
       </div>
 
       <div className="actions">
+        {state.demo && (
+          <button className="btn btn-pink" onClick={mine.open}>
+            <Camera size={20} /> Now make it with my pics
+          </button>
+        )}
         <button className="btn btn-primary" disabled={!blob} onClick={onSave}>
           <Download size={20} /> {isIOS ? 'Save to Photos' : 'Download HD'}
         </button>
@@ -95,10 +120,19 @@ export function Done() {
           <Share2 size={20} /> Share on WhatsApp
         </button>
 
+        {won && !nudgeOff && install.available && (
+          <div className="install-nudge" role="status">
+            <span className="ig-tile" aria-hidden><Sparkle /></span>
+            <p><b>Keep Chamak on your home screen</b>Diwali frames drop soon. One tap, no app store.</p>
+            <InstallButton className="nudge-go" onStart={() => { markNudgeSeen(); }}>Add</InstallButton>
+            <button className="nudge-x" aria-label="Not now" onClick={() => { markNudgeSeen(); setNudgeOff(true); }}><X size={16} /></button>
+          </div>
+        )}
+
         <label className="toggle">
           <input type="checkbox" checked={state.badge} onChange={() => dispatch({ type: 'TOGGLE_BADGE' })} />
           <span className="switch" />
-          <span>Add a small “made with chamak” tag</span>
+          <span>Add a small “made with chamak” tag (helps friends find us)</span>
         </label>
 
         {HAS_BONUS && !unlocked && (
@@ -113,6 +147,8 @@ export function Done() {
           <button className="btn btn-ghost" onClick={() => dispatch({ type: 'RESET' })}>New photos</button>
         </div>
       </div>
+      {mine.input}
+      {mine.overlay}
     </div>
   );
 }

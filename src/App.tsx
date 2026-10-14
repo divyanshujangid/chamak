@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ProjectProvider, useProject, type Step } from './state/project';
+import { usePhotoProcessing } from './state/processing';
 import { ToastProvider } from './ui/Toast';
 import { Upload } from './ui/Upload';
 import { Picker } from './ui/Picker';
@@ -9,6 +10,7 @@ import { Privacy } from './ui/Privacy';
 
 function Flow() {
   const { state, dispatch } = useProject();
+  usePhotoProcessing();
   let step: Step = state.step;
   if (!state.photos.length) step = 'upload';
   else if ((step === 'edit' || step === 'done') && !state.templateId) step = 'pick';

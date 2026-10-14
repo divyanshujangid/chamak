@@ -1,23 +1,45 @@
+/* Chamak brand tokens. See docs/07-brand.md. Dark only. */
 :root {
-  --bg: #0E0A0C;
-  --bg-glow: #24120F;
-  --surface: #1A1316;
-  --surface-2: #261C20;
-  --line: rgba(247, 241, 234, 0.1);
-  --text: #F7F1EA;
-  --text-dim: #B8ADA6;
-  --accent: #F0B32E;
-  --accent-2: #FF8A3D;
-  --accent-ink: #1A1100;
+  /* Raat (night) neutrals */
+  --bg: #0B0912;
+  --bg-glow: #2A0F2A;
+  --surface: #16121F;
+  --surface-2: #231D30;
+  --surface-3: #2E2640;
+  --line: rgba(251, 247, 255, 0.1);
+  --line-strong: rgba(251, 247, 255, 0.2);
+  --text: #FBF7FF;
+  --text-dim: #B3ABC4;
+
+  /* Brand colours */
+  --rani: #FF3D8B;     /* rani pink: the brand */
+  --nimbu: #DBFF4A;    /* nimbu lime: primary CTA only */
+  --genda: #FFB22E;    /* marigold: stickers, badges */
+  --neel: #8C7BFF;     /* Smart Pick / magic moments */
+  --ink: #0B0912;      /* text on bright fills */
+
+  /* Semantic aliases (other screens use these) */
+  --accent: var(--rani);
+  --accent-2: var(--genda);
+  --accent-ink: var(--ink);
+  --cta: var(--nimbu);
+  --cta-ink: var(--ink);
   --wa: #25D366;
   --danger: #FF5A5F;
+
   --radius: 16px;
   --radius-lg: 24px;
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px;
+
   --font-ui: 'DM Sans Variable', system-ui, -apple-system, sans-serif;
-  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-display: 'Bricolage Grotesque Variable', 'DM Sans Variable', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --font-deva: 'Yatra One', 'Bricolage Grotesque Variable', serif;
+
   --tap: 52px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
 }

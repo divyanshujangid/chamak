@@ -3,8 +3,12 @@ import v2only from './v2';
 import collages from './v2/collages';
 import artful from './v2/artful';
 import scrapbook from './v2/scrapbook';
+import v3 from './v3';
+import v4 from './v4';
 
-const v2 = [...scrapbook, ...artful, ...collages, ...v2only];
+// v3 (14 Oct, first pass) is hidden from the app after owner review; dev sheet still renders it via ?set=v3.
+void v3;
+const v2 = [...v4, ...scrapbook, ...artful, ...collages, ...v2only];
 
 /** Display order: festival-of-the-moment first, then the rest. Old v1 set retired (rejected in review). */
 export function allTemplates(now = new Date()): Template[] {

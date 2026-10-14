@@ -3,7 +3,7 @@ import { useGesture } from '@use-gesture/react';
 import { ChevronLeft, Images, Plus, RotateCw, Shuffle, Sparkles } from 'lucide-react';
 import { assign } from '../engine/assign';
 import { clampTransform, hitSlot } from '../engine/fit';
-import { importFiles } from '../engine/photos';
+import { MAX_PHOTOS, importFiles } from '../engine/photos';
 import { scoreAll } from '../engine/score';
 import type { PhotoTransform } from '../engine/types';
 import { byId } from '../templates';
@@ -101,7 +101,7 @@ export function Editor() {
 
   async function addPhotos(list: FileList | null) {
     if (!list?.length) return;
-    const room = 8 - state.photos.length;
+    const room = MAX_PHOTOS - state.photos.length;
     const added = await importFiles(Array.from(list).slice(0, room));
     scoreAll([...state.photos, ...added]);
     dispatch({ type: 'ADD_PHOTOS', photos: added });
@@ -137,7 +137,7 @@ export function Editor() {
       <div className="chips">
         <button className={`chip ${strip ? 'on' : ''}`} onClick={() => setStrip((s) => !s)}><Images size={16} /> Swap</button>
         <button className="chip" onClick={() => { dispatch({ type: 'SET_ASSIGNMENTS', assignments: assign(t, state.photos) }); toast('Smart Pick (on-device): best shots in the biggest spots'); }}><Sparkles size={16} /> Smart Pick</button>
-        <button className="chip" onClick={() => dispatch({ type: 'SET_ASSIGNMENTS', assignments: assign(t, state.photos, true) })}><Shuffle size={16} /> Shuffle</button>
+        <button className="chip" onClick={() => dispatch({ type: 'SET_ASSIGNMENTS', assignments: assign(t, state.photos, true), manual: true })}><Shuffle size={16} /> Shuffle</button>
       </div>
 
       {strip && (
@@ -158,7 +158,7 @@ export function Editor() {
               </button>
             );
           })}
-          {state.photos.length < 8 && (
+          {state.photos.length < MAX_PHOTOS && (
             <button className="sthumb add" onClick={() => fileRef.current?.click()} aria-label="Add photos"><Plus /></button>
           )}
           <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={(e) => addPhotos(e.target.files)} />

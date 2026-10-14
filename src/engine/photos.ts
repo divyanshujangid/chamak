@@ -1,6 +1,8 @@
 import type { Photo } from './types';
 
 const MAX_EDGE = 2048;
+/** Most photos per project (3x3 templates need 9). */
+export const MAX_PHOTOS = 9;
 
 async function makeThumb(bitmap: ImageBitmap, size: number): Promise<string> {
   const k = size / Math.max(bitmap.width, bitmap.height);
@@ -36,7 +38,7 @@ export async function importOne(source: Blob): Promise<Photo> {
 
 /** Sequential on purpose: Promise.all spikes memory on budget phones. */
 export async function importFiles(files: Blob[], onProgress?: (done: number, total: number) => void): Promise<Photo[]> {
-  const list = files.filter((f) => f.type.startsWith('image/') || f.type === '').slice(0, 8);
+  const list = files.filter((f) => f.type.startsWith('image/') || f.type === '').slice(0, MAX_PHOTOS);
   const out: Photo[] = [];
   for (let i = 0; i < list.length; i++) {
     try {

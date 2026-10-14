@@ -1,4 +1,4 @@
 .privacy article { padding: 8px 24px 48px; color: var(--text-dim); font-size: 16px; line-height: 1.55; }
-.privacy h2 { font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1.1; color: var(--text); margin: 8px 0 16px; }
+.privacy h2 { font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; letter-spacing: -0.04em; color: var(--text); margin: 8px 0 16px; }
 .privacy h3 { color: var(--text); font-size: 16px; margin: 24px 0 6px; }
 .privacy p { margin: 0; }
