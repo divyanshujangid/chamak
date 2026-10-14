@@ -8,7 +8,9 @@ import v4 from './v4';
 
 // v3 (14 Oct, first pass) is hidden from the app after owner review; dev sheet still renders it via ?set=v3.
 void v3;
-const v2 = [...v4, ...scrapbook, ...artful, ...collages, ...v2only];
+// v2 (12–13 Oct) hidden on 15 Oct at the owner's request; only the v4 Pinterest-reference set is live.
+void [scrapbook, artful, collages, v2only];
+const v2 = [...v4];
 
 /** Display order: festival-of-the-moment first, then the rest. Old v1 set retired (rejected in review). */
 export function allTemplates(now = new Date()): Template[] {

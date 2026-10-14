@@ -24,7 +24,7 @@ const CHIPS: { id: Chip; label: string }[] = [
   { id: 'friends', label: 'Friends' },
   { id: 'diwali', label: 'Diwali' },
   { id: 'saved', label: 'Saved' },
-];
+].filter((c) => c.id !== 'diwali' || TEMPLATES.some((t) => t.pack === 'diwali')) as { id: Chip; label: string }[];
 
 const GAP = 12;
 const FULL_RANGE = 2; // live canvases for the active card ±2

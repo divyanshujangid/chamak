@@ -5,7 +5,7 @@ import { TEMPLATES, byId } from '../templates';
 
 export type Shelf = 'hot' | 'girls' | 'boys' | 'friends' | 'colours' | 'diwali';
 
-export const SHELVES: { id: Shelf; label: string }[] = [
+const ALL_SHELVES: { id: Shelf; label: string }[] = [
   { id: 'hot', label: 'Trending' },
   { id: 'girls', label: 'Girls' },
   { id: 'boys', label: 'Boys' },
@@ -13,6 +13,9 @@ export const SHELVES: { id: Shelf; label: string }[] = [
   { id: 'colours', label: '9 Colours' },
   { id: 'diwali', label: 'Diwali' },
 ];
+
+/** Tabs that have at least one frame (Diwali stays hidden until its pack exists). */
+export const SHELVES = ALL_SHELVES.filter((s) => s.id !== 'diwali' || TEMPLATES.some((t) => t.pack === 'diwali'));
 
 const IDS: Record<Exclude<Shelf, 'diwali'>, string[]> = {
   hot: [
