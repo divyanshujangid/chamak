@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <script>
-      // Old address -> new home. Off until storiyaan.divyanshujangid.in DNS is live; flip to true then.
+      // Old address -> new home (storiyaan.divyanshujangid.in live since 15 Oct). Add ?stay=1 to test the old host.
       // Add ?stay=1 to keep testing on the old host.
       (function () {
-        var REDIRECT_OLD_HOST = false;
+        var REDIRECT_OLD_HOST = true;
         if (!REDIRECT_OLD_HOST) return;
         if (location.hostname !== 'chamak.pages.dev') return;
         if (/(?:^|[?&])stay=1(?:&|$)/.test(location.search)) return;
@@ -22,7 +22,7 @@
     <meta property="og:site_name" content="Storiyaan" />
     <meta property="og:title" content="Storiyaan ✦ Photo daalo, story ready" />
     <meta property="og:description" content="Garba ke baad thak gaye? Insta-ready story in 30 sec, right in the cab home. Free, no signup." />
-    <meta property="og:image" content="https://chamak.pages.dev/og.jpg?v=7" />
+    <meta property="og:image" content="https://storiyaan.divyanshujangid.in/og.jpg?v=8" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://storiyaan.divyanshujangid.in/" />
@@ -30,7 +30,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Storiyaan ✦ Photo daalo, story ready" />
     <meta name="twitter:description" content="Garba ke baad thak gaye? Insta-ready story in 30 sec, right in the cab home. Free, no signup." />
-    <meta name="twitter:image" content="https://chamak.pages.dev/og.jpg?v=7" />
+    <meta name="twitter:image" content="https://storiyaan.divyanshujangid.in/og.jpg?v=8" />
     <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=3" />

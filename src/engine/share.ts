@@ -1,8 +1,8 @@
 export const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-// Switch to https://storiyaan.divyanshujangid.in once its DNS (CNAME at Hostinger) is live.
-export const SITE_URL = 'https://chamak.pages.dev';
+// Home since 15 Oct 2026 (CNAME at Hostinger -> chamak.pages.dev); chamak.pages.dev redirects here.
+export const SITE_URL = 'https://storiyaan.divyanshujangid.in';
 
 export function shareText(now = new Date()) {
   return now < new Date('2026-10-21')
