@@ -1,0 +1,6 @@
+# Short tracking links -> app with ?src=<channel> (read by PostHog as the "src" property)
+/wa        /?src=wa-friends    302
+/wa-status /?src=wa-status     302
+/ig        /?src=ig-story      302
+/ig-bio    /?src=ig-bio        302
+/qr        /?src=banner        302
