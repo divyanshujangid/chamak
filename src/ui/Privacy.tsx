@@ -1,4 +1,5 @@
 import { ChevronLeft } from 'lucide-react';
+import { PoweredBy } from './PoweredBy';
 
 export function Privacy() {
   return (
@@ -20,6 +21,7 @@ export function Privacy() {
         <h3>Contact</h3>
         <p>Made in India by Divyanshu. Questions: <a href="mailto:divyanshujangid.todoit@gmail.com">divyanshujangid.todoit@gmail.com</a></p>
       </article>
+      <PoweredBy />
     </div>
   );
 }

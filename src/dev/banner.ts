@@ -2,6 +2,8 @@
 // banner.html?format=poster|flex&src=<slug>&label=<small location text>
 //   poster: A3 portrait, 300 dpi, trim 3508x4961 plus 3 mm (35 px) bleed on every side.
 //   flex:   3 ft x 2 ft landscape, 150 dpi, 5400x3600 (no bleed; shops hem/eyelet the edge).
+//   card:   12 x 18 cm photo print, 300 dpi, 1417x2126, no bleed (photo labs fill the paper).
+//           Drawn with the poster layout on a 2:3 design sheet, then scaled down.
 import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource-variable/dm-sans';
 import '@fontsource/instrument-serif/400-italic.css';
@@ -29,19 +31,25 @@ const DMS = '"DM Sans Variable"';
 const MONO = '"Space Mono"';
 
 const q = new URLSearchParams(location.search);
-const format = q.get('format') === 'flex' ? 'flex' : 'poster';
+const fq = q.get('format');
+const format = fq === 'flex' || fq === 'card' ? fq : 'poster';
 const src = (q.get('src') || 'banner').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '') || 'banner';
 const label = (q.get('label') || '').trim();
 const QR_URL = `https://${SITE}/?src=${encodeURIComponent(src)}`;
 
 const BLEED = format === 'poster' ? 35 : 0;
-const TW = format === 'poster' ? 3508 : 5400;
-const TH = format === 'poster' ? 4961 : 3600;
+const TW = format === 'flex' ? 5400 : 3508;
+const TH = format === 'flex' ? 3600 : format === 'card' ? 5262 : 4961;
+// Output pixels per design pixel (card: 1417 px across = 12 cm at 300 dpi).
+const K = format === 'card' ? 1417 / TW : 1;
+const SW = TW + BLEED * 2;
+const SH = TH + BLEED * 2;
 
 const c = document.getElementById('c') as HTMLCanvasElement;
-c.width = TW + BLEED * 2;
-c.height = TH + BLEED * 2;
+c.width = Math.round(SW * K);
+c.height = Math.round(SH * K);
 const ctx = c.getContext('2d')!;
+ctx.scale(K, K);
 
 const rad = (d: number) => (d * Math.PI) / 180;
 
@@ -95,7 +103,7 @@ function glow(x: number, y: number, r: number, rgba: string, a: number) {
   g.addColorStop(0.55, `rgba(${rgba},${a * 0.35})`);
   g.addColorStop(1, `rgba(${rgba},0)`);
   ctx.fillStyle = g;
-  ctx.fillRect(-BLEED, -BLEED, c.width, c.height);
+  ctx.fillRect(-BLEED, -BLEED, SW, SH);
 }
 
 /** Fine monochrome grain: hides gradient banding on print and gives the dark field some tooth. */
@@ -114,7 +122,7 @@ function grain(alpha: number) {
   ctx.globalAlpha = alpha;
   ctx.globalCompositeOperation = 'soft-light';
   ctx.fillStyle = ctx.createPattern(n, 'repeat')!;
-  ctx.fillRect(-BLEED, -BLEED, c.width, c.height);
+  ctx.fillRect(-BLEED, -BLEED, SW, SH);
   ctx.restore();
 }
 
@@ -329,10 +337,10 @@ const TOPTAG = (label || 'NAVRATRI 2026').toUpperCase();
 
   // Background over the whole sheet including bleed; everything else in trim coordinates.
   ctx.fillStyle = INK;
-  ctx.fillRect(0, 0, c.width, c.height);
+  ctx.fillRect(0, 0, SW, SH);
   ctx.translate(BLEED, BLEED);
 
-  if (format === 'poster') await poster(photos, map);
+  if (format !== 'flex') await poster(photos, map);
   else await flex(photos, map);
 
   document.body.dataset.done = '1';
@@ -403,7 +411,7 @@ async function poster(photos: Photo[], map: Map<string, Photo>) {
   y += chips(mx, y, TRUST, chipSize, leftW) + 60;
   drawRuns([{ t: 'Pics stay on your phone. Pakka.', font: `500 ${78}px ${DMS}`, color: DIM }], mx, y + 70);
 
-  console.log('poster qr', info, 'cm', ((info.size / 300) * 2.54).toFixed(1));
+  console.log('poster qr', info, 'cm', ((info.size * K / 300) * 2.54).toFixed(1));
 }
 
 async function flex(photos: Photo[], map: Map<string, Photo>) {

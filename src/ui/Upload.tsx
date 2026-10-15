@@ -1,3 +1,4 @@
+import { PoweredBy } from './PoweredBy';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Camera, Download, Lock, Plus, ShieldCheck, X } from 'lucide-react';
 import type { Photo, Template } from '../engine/types';
@@ -108,7 +109,12 @@ export function Upload() {
   return (
     <div className="upload">
       <header className="topbar">
-        <Wordmark />
+        <Wordmark href="/" onClick={(e) => {
+          // Already home: just glide back to the top instead of reloading (keeps any added photos).
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          document.querySelectorAll('.upload, .app').forEach((el) => el.scrollTo({ top: 0, behavior: 'smooth' }));
+        }} />
         <span />
         <div className="right top-actions">
           <InstallButton className="get-app"><Download size={15} /> Get app</InstallButton>
@@ -159,6 +165,7 @@ export function Upload() {
               ))}
             </div>
             <p className="g-foot caption"><ShieldCheck size={14} /> Samples shown. Your pics stay on your phone, always.</p>
+            <PoweredBy />
           </section>
         </>
       ) : (

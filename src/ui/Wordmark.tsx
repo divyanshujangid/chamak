@@ -8,9 +8,9 @@ export function Sparkle({ className, size }: { className?: string; size?: number
 }
 
 /** "storiyaan": Bricolage 800 with the "aa" in rani Instrument Serif italic, like "story *ready.*". */
-export function Wordmark({ href }: { href?: string }) {
+export function Wordmark({ href, onClick }: { href?: string; onClick?: (e: React.MouseEvent) => void }) {
   const inner = <>storiy<span className="wm-aa">aa</span>n</>;
   return href
-    ? <a className="wordmark left" href={href} aria-label="Storiyaan home">{inner}</a>
+    ? <a className="wordmark left" href={href} onClick={onClick} aria-label="Storiyaan home">{inner}</a>
     : <span className="wordmark left" role="img" aria-label="Storiyaan">{inner}</span>;
 }
