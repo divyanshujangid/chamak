@@ -14,6 +14,7 @@ import { SmartPickMoment, photoSetKey, shouldShowSmartPick } from './SmartPick';
 import { thumb, cachedThumb } from './thumbs';
 import { usePhotoImport } from './usePhotoImport';
 import './picker.css';
+import { track } from '../analytics';
 
 type Chip = Shelf | 'saved';
 const CHIPS: { id: Chip; label: string }[] = [
@@ -150,6 +151,7 @@ export function Picker() {
     if (isLocked(tp)) { setLockSheet(true); return; }
     dispatch({ type: 'SET_TEMPLATE', templateId: tp.id, assignments: assignments.get(tp.id)! });
     dispatch({ type: 'SET_STEP', step: 'edit' });
+    track('template_chosen', { template: tp.id, photos: state.photos.length, demo: !!state.demo });
   };
   const u = unlockState();
   const short = t ? t.slots.length - state.photos.length : 0;

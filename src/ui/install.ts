@@ -1,6 +1,7 @@
 // "Add to Home Screen" for Android (one-tap prompt) and iOS (guided steps).
 // Imported from main.tsx so `beforeinstallprompt` is captured before React mounts.
 import { useEffect, useState } from 'react';
+import { track } from '../analytics';
 
 interface BIPEvent extends Event {
   prompt(): Promise<void>;
@@ -65,6 +66,7 @@ export async function promptInstall(): Promise<boolean> {
   deferred = null;
   await e.prompt();
   const { outcome } = await e.userChoice;
+  track('install_prompt', { outcome });
   emit();
   return outcome === 'accepted';
 }

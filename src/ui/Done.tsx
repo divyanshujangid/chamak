@@ -12,6 +12,7 @@ import { markNudgeSeen, nudgeSeen, useInstall } from './install';
 import { usePhotoImport } from './usePhotoImport';
 import { Sparkle } from './Wordmark';
 import './done.css';
+import { track } from '../analytics';
 
 export function Done() {
   const { state, dispatch } = useProject();
@@ -57,8 +58,11 @@ export function Done() {
     bump((n) => n + 1);
   };
 
+  const meta = () => ({ template: t.id, photos: state.photos.length, demo: !!state.demo, ios: isIOS });
+
   async function onSave() {
     if (!blob) return;
+    track('story_saved', meta());
     const was = isUnlocked();
     if (isIOS) {
       const r = await shareImage(blob, name);
@@ -77,6 +81,7 @@ export function Done() {
     if (!blob) return;
     const was = isUnlocked();
     const r = await shareImage(blob, name, shareText());
+    track('story_shared', { ...meta(), result: r });
     if (r === 'shared') { recordShare(); afterCount(was); }
     else if (r === 'blocked') toast('Tap Share again');
     else if (r === 'failed') { download(blob, name); toast('Sharing failed, so we saved it to your downloads'); }

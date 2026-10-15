@@ -14,7 +14,7 @@ export function Privacy() {
         <h3>What we store</h3>
         <p>One small setting in your browser's local storage, remembering whether you have unlocked bonus frames and seen the swipe hint. No cookies. No accounts.</p>
         <h3>Analytics</h3>
-        <p>We count page views with Cloudflare Web Analytics, which uses no cookies and does not identify you.</p>
+        <p>We use PostHog (EU servers) to count simple steps: page opened, sample pics tried, frame picked, story saved or shared, and which banner or link brought you here. No cookies, no screen recording, no names. Your photos are never sent, only things like the frame name and how many photos you used.</p>
         <h3>The art</h3>
         <p>Every frame is drawn in code by us. No images are taken from anywhere. Fonts are open-source (SIL Open Font License).</p>
         <h3>Contact</h3>

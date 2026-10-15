@@ -4,6 +4,7 @@ import { scoreAll } from '../engine/score';
 import type { Photo } from '../engine/types';
 import { MAX_PHOTOS, useProject } from '../state/project';
 import { useToast } from './Toast';
+import { track } from '../analytics';
 
 /**
  * Shared photo picker: a hidden file input, sequential on-device import with progress,
@@ -36,6 +37,7 @@ export function usePhotoImport({ replace = false, onDone }: { replace?: boolean;
     const all = replace ? added : [...state.photos, ...added];
     scoreAll(all);
     dispatch(replace ? { type: 'REPLACE_PHOTOS', photos: added } : { type: 'ADD_PHOTOS', photos: added });
+    track('photos_added', { added: added.length, total: all.length, replace });
     onDone?.(all);
   }
 

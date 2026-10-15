@@ -12,6 +12,7 @@ import { usePhotoImport } from './usePhotoImport';
 import { useViewport } from './useViewport';
 import { Sparkle, Wordmark } from './Wordmark';
 import './upload.css';
+import { track } from '../analytics';
 
 const SET = 'samples';
 const COLOURS = ['orange', 'white', 'red', 'royal blue', 'yellow', 'green', 'grey', 'purple', 'peacock green'];
@@ -88,6 +89,7 @@ export function Upload() {
     try {
       const photos = await demoProjectPhotos();
       dispatch({ type: 'REPLACE_PHOTOS', photos, demo: true });
+      track('demo_started', { template: t?.id ?? null });
       dispatch({ type: 'SET_PREFER', id: t?.id ?? null });
       dispatch({ type: 'SET_STEP', step: 'pick' });
     } catch {
@@ -142,7 +144,7 @@ export function Upload() {
             </div>
             <div className="g-tabs" role="tablist">
               {SHELVES.map((s) => (
-                <button key={s.id} role="tab" aria-selected={tab === s.id} className={`pchip ${tab === s.id ? 'on' : ''}`} onClick={() => setTab(s.id)}>
+                <button key={s.id} role="tab" aria-selected={tab === s.id} className={`pchip ${tab === s.id ? 'on' : ''}`} onClick={() => { setTab(s.id); track('gallery_tab', { tab: s.id }); }}>
                   {s.label}
                 </button>
               ))}

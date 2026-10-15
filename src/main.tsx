@@ -11,6 +11,9 @@ import './styles/base.css';
 import './styles/privacy.css';
 import './ui/install'; // captures beforeinstallprompt before React mounts
 import App from './App';
+import { initAnalytics } from './analytics';
+
+initAnalytics();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
