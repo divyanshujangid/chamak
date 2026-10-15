@@ -12,7 +12,7 @@ interface Props {
   onStart?: () => void;
 }
 
-/** A button that installs Storywala the best way this browser allows. Renders nothing when installed. */
+/** A button that installs Storiyaan the best way this browser allows. Renders nothing when installed. */
 export function InstallButton({ className, children, onStart }: Props) {
   const { available, mode } = useInstall();
   const [sheet, setSheet] = useState<InstallMode | null>(null);
@@ -23,7 +23,7 @@ export function InstallButton({ className, children, onStart }: Props) {
     onStart?.();
     if (mode === 'prompt') {
       const ok = await promptInstall();
-      if (ok) toast('Storywala is on your home screen ✦');
+      if (ok) toast('Storiyaan is on your home screen ✦');
       return;
     }
     setSheet(mode);
@@ -40,7 +40,7 @@ export function InstallButton({ className, children, onStart }: Props) {
 function AppTile() {
   return (
     <span className="ig-tile" aria-hidden>
-      <img src="/icons/icon-192.png?v=2" alt="" width={56} height={56} />
+      <img src="/icons/icon-192.png?v=3" alt="" width={56} height={56} />
     </span>
   );
 }
@@ -61,12 +61,12 @@ export function InstallGuide({ mode, onClose }: { mode: InstallMode; onClose: ()
   return (
     <>
       <div className="sheet-backdrop" onClick={onClose} />
-      <div className="sheet install-sheet" role="dialog" aria-label="Add Storywala to your home screen">
+      <div className="sheet install-sheet" role="dialog" aria-label="Add Storiyaan to your home screen">
         <div className="grabber" />
         <div className="ig-head">
           <AppTile />
           <div>
-            <h2>Storywala on your home screen</h2>
+            <h2>Storiyaan on your home screen</h2>
             <p className="caption">Opens like an app. Ready for Dussehra and Diwali. Still no signup.</p>
           </div>
         </div>

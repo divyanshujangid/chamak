@@ -83,12 +83,15 @@ a { color: var(--accent); }
   letter-spacing: 0.08em; text-transform: uppercase;
 }
 .wordmark {
-  display: inline-flex; align-items: flex-start;
-  font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 31px;
-  letter-spacing: -0.01em; line-height: 1; color: var(--text);
+  display: inline-flex; align-items: baseline;
+  font-family: var(--font-display); font-weight: 800; font-size: 26px;
+  letter-spacing: -0.04em; line-height: 1; color: var(--text);
   text-decoration: none; padding-left: 8px;
 }
-.wordmark svg { width: 11px; height: 11px; margin: -2px 0 0 2px; color: var(--gulabi); flex: none; }
+.wordmark .wm-aa {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 1.18em;
+  letter-spacing: 0; color: var(--rani);
+}
 
 .caption { font-size: 13px; color: var(--text-dim); }
 .bottom-bar {

@@ -211,7 +211,7 @@ function drawBadge(ctx: CanvasRenderingContext2D) {
   ctx.fillStyle = 'rgba(255,255,255,0.75)';
   ctx.shadowColor = 'rgba(0,0,0,0.6)';
   ctx.shadowBlur = 8;
-  ctx.fillText('made with storywala ✦', 1040, 1890);
+  ctx.fillText('made with storiyaan ✦', 1040, 1890);
   ctx.restore();
 }
 

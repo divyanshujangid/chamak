@@ -122,8 +122,8 @@ export function Done() {
 
         {won && !nudgeOff && install.available && (
           <div className="install-nudge" role="status">
-            <span className="ig-tile" aria-hidden><img src="/icons/icon-192.png?v=2" alt="" width={40} height={40} /></span>
-            <p><b>Keep Storywala on your home screen</b>Diwali frames drop soon. One tap, no app store.</p>
+            <span className="ig-tile" aria-hidden><img src="/icons/icon-192.png?v=3" alt="" width={40} height={40} /></span>
+            <p><b>Keep Storiyaan on your home screen</b>Diwali frames drop soon. One tap, no app store.</p>
             <InstallButton className="nudge-go" onStart={() => { markNudgeSeen(); }}>Add</InstallButton>
             <button className="nudge-x" aria-label="Not now" onClick={() => { markNudgeSeen(); setNudgeOff(true); }}><X size={16} /></button>
           </div>
@@ -132,7 +132,7 @@ export function Done() {
         <label className="toggle">
           <input type="checkbox" checked={state.badge} onChange={() => dispatch({ type: 'TOGGLE_BADGE' })} />
           <span className="switch" />
-          <span>Add a small “made with storywala” tag (helps friends find us)</span>
+          <span>Add a small “made with storiyaan” tag (helps friends find us)</span>
         </label>
 
         {HAS_BONUS && !unlocked && (

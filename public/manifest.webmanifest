@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Storywala",
-  "short_name": "Storywala",
+  "name": "Storiyaan",
+  "short_name": "Storiyaan",
   "description": "Photo daalo, story ready. Navratri and Diwali story frames in 30 seconds. No signup. Photos never leave your phone.",
   "lang": "en-IN",
   "start_url": "/?source=pwa",
@@ -12,9 +12,9 @@
   "background_color": "#0B0912",
   "categories": ["photo", "lifestyle", "entertainment"],
   "icons": [
-    { "src": "/icons/icon-192.png?v=2", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png?v=2", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/maskable-512.png?v=2", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "/favicon.svg?v=2", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    { "src": "/icons/icon-192.png?v=3", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicon.svg?v=3", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

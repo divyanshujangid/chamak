@@ -1,4 +1,4 @@
-/** Four-point sparkle: the Storywala accent. */
+/** Four-point sparkle: the ✦ accent used across the UI (not part of the wordmark). */
 export function Sparkle({ className, size }: { className?: string; size?: number }) {
   return (
     <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden fill="currentColor">
@@ -7,9 +7,10 @@ export function Sparkle({ className, size }: { className?: string; size?: number
   );
 }
 
+/** "storiyaan": Bricolage 800 with the "aa" in rani Instrument Serif italic, like "story *ready.*". */
 export function Wordmark({ href }: { href?: string }) {
-  const inner = <>storywala<Sparkle /></>;
+  const inner = <>storiy<span className="wm-aa">aa</span>n</>;
   return href
-    ? <a className="wordmark left" href={href} aria-label="Storywala home">{inner}</a>
-    : <span className="wordmark left" role="img" aria-label="Storywala">{inner}</span>;
+    ? <a className="wordmark left" href={href} aria-label="Storiyaan home">{inner}</a>
+    : <span className="wordmark left" role="img" aria-label="Storiyaan">{inner}</span>;
 }

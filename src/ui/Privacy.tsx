@@ -10,7 +10,7 @@ export function Privacy() {
       </header>
       <article>
         <h2>Your photos never leave your phone.</h2>
-        <p>Storywala runs entirely in your browser. There is no server, no database and no upload. Your photos are read into your phone's memory, drawn into the frame on your phone, and saved to your phone. Close the tab and they are gone.</p>
+        <p>Storiyaan runs entirely in your browser. There is no server, no database and no upload. Your photos are read into your phone's memory, drawn into the frame on your phone, and saved to your phone. Close the tab and they are gone.</p>
         <h3>What we store</h3>
         <p>One small setting in your browser's local storage, remembering whether you have unlocked bonus frames and seen the swipe hint. No cookies. No accounts.</p>
         <h3>Analytics</h3>

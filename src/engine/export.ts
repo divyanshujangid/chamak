@@ -33,5 +33,5 @@ export async function exportJpeg(
 export function exportName(t: Template) {
   const d = new Date();
   const ymd = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
-  return `storywala-${t.id}-${ymd}.jpg`;
+  return `storiyaan-${t.id}-${ymd}.jpg`;
 }

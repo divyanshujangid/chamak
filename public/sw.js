@@ -1,7 +1,7 @@
-// Storywala service worker: offline app shell + cached art.
+// Storiyaan service worker: offline app shell + cached art.
 // Never touches user photos: they are read from the device and never fetched, and
 // this worker ignores anything that isn't a same-origin GET (blob:, data:, POST…).
-const VERSION = 'storywala-v1';
+const VERSION = 'storiyaan-v1';
 const SHELL = `${VERSION}-shell`;
 const STATIC = `${VERSION}-static`;
 const PRECACHE = ['/', '/manifest.webmanifest', '/favicon.svg', '/icons/icon-192.png'];

@@ -10,22 +10,6 @@ import { galleryPhotos } from '../ui/samples';
 const INK = '#0B0912';
 const RANI = '#FF3D8B';
 const LIME = '#DBFF4A';
-const GULABI = '#F4A9BE';
-
-function sparkle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, fill: string) {
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.beginPath();
-  ctx.moveTo(0, -r);
-  ctx.quadraticCurveTo(r * 0.12, -r * 0.12, r, 0);
-  ctx.quadraticCurveTo(r * 0.12, r * 0.12, 0, r);
-  ctx.quadraticCurveTo(-r * 0.12, r * 0.12, -r, 0);
-  ctx.quadraticCurveTo(-r * 0.12, -r * 0.12, 0, -r);
-  ctx.fillStyle = fill;
-  ctx.fill();
-  ctx.restore();
-}
-
 (async () => {
   const c = document.getElementById('c') as HTMLCanvasElement;
   const ctx = c.getContext('2d')!;
@@ -75,21 +59,29 @@ function sparkle(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: numbe
     ctx.restore();
   }
 
-  // Brand row: app icon + "storywala" wordmark (Instrument Serif italic) + soft sparkle.
+  // Brand row: story-stack app icon + "storiyaan" wordmark (Bricolage 800, "aa" in rani Instrument Serif italic).
   const icon = new Image();
-  icon.src = '/icons/icon-192.png';
+  icon.src = '/icons/icon-192.png?v=3';
   await icon.decode().catch(() => {});
   ctx.save();
   ctx.beginPath();
-  ctx.roundRect(64, 50, 60, 60, 14);
+  ctx.roundRect(64, 46, 64, 64, 15);
   ctx.clip();
-  ctx.drawImage(icon, 64, 50, 60, 60);
+  ctx.drawImage(icon, 64, 46, 64, 64);
   ctx.restore();
-  ctx.fillStyle = '#FFFFFF';
-  ctx.font = 'italic 400 58px "Instrument Serif"';
-  ctx.fillText('storywala', 140, 98);
-  const ww = ctx.measureText('storywala').width;
-  sparkle(ctx, 140 + ww + 14, 62, 11, GULABI);
+  const WM = 50;
+  let wx = 144;
+  const part = (text: string, font: string, color: string, spacing: string) => {
+    ctx.font = font;
+    ctx.fillStyle = color;
+    ctx.letterSpacing = spacing;
+    ctx.fillText(text, wx, 96);
+    wx += ctx.measureText(text).width;
+  };
+  part('storiy', `800 ${WM}px "Bricolage Grotesque Variable"`, '#FFFFFF', '-2px');
+  part('aa', `italic 400 ${Math.round(WM * 1.18)}px "Instrument Serif"`, RANI, '0px');
+  part('n', `800 ${WM}px "Bricolage Grotesque Variable"`, '#FFFFFF', '-2px');
+  ctx.letterSpacing = '0px';
 
   ctx.fillStyle = '#FFFFFF';
   ctx.font = '800 84px "Bricolage Grotesque Variable"';
