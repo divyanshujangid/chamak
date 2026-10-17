@@ -78,7 +78,7 @@ function tornPath(ctx: Ctx, x: number, y: number, w: number, h: number, seed: nu
 }
 
 /** The beige torn-paper music player from the pin (no brand, just controls). */
-function paperPlayer(ctx: Ctx, x: number, y: number, w: number, h: number) {
+export function paperPlayer(ctx: Ctx, x: number, y: number, w: number, h: number) {
   const card = cached(`pd-paper-player-${w}x${h}`, w + 40, h + 40, (c) => {
     c.translate(20, 20);
     // white paper core showing at the torn edge

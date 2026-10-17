@@ -5,7 +5,8 @@ import pond from './pond';
 import desi from './desi';
 import luxe from './luxe';
 import colours from './colours';
+import pins5 from './pins5';
 
-export const V4_SETS: Record<string, Template[]> = { pinkpaper, pond4: pond, desi, luxe, colours4: colours };
-const v4: Template[] = [...colours, ...pinkpaper, ...pond, ...desi, ...luxe];
+export const V4_SETS: Record<string, Template[]> = { pinkpaper, pond4: pond, desi, luxe, colours4: colours, pins5 };
+const v4: Template[] = [...pins5, ...colours, ...pinkpaper, ...pond, ...desi, ...luxe];
 export default v4;
